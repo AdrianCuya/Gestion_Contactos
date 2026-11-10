@@ -1,0 +1,10 @@
+body {
+    font-family: 'Inter', sans-serif;
+    user-select: none;
+}
+
+/* Color azul slate del prototipo */
+.card-eleccion {
+    background-color: #68749c;
+    border: 2px solid #525d80;
+}

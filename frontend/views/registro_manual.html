@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro Manual de Contacto</title>
+
+    <!-- Librerías Externas -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Hoja de Estilos -->
+    <link rel="stylesheet" href="../assets/css/registro_manual.css">
+</head>
+<body class="flex items-center justify-center min-h-screen p-4">
+
+    <!-- Tarjeta Principal con Estilo Prototipo -->
+    <div class="card-formulario w-full max-w-2xl rounded-sm p-6 md:p-8 text-white shadow-2xl">
+
+        <form id="formRegistroManual" class="space-y-4">
+
+            <!-- Tipo de Contacto -->
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                <label for="tipoContacto" class="text-sm font-medium">Tipo de contacto:</label>
+                <select id="tipoContacto" required class="input-blanco sm:w-2/3 px-3 py-1.5 rounded-sm text-sm">
+                    <option value="" disabled selected>Seleccionar (Personal / Cliente)</option>
+                    <option value="Personal">Personal</option>
+                    <option value="Cliente">Cliente</option>
+                </select>
+            </div>
+
+            <!-- Sección: Datos Generales -->
+            <div class="pt-2 border-t border-slate-400/30">
+                <h3 class="text-sm font-semibold text-gray-200 mb-3">Datos Generales</h3>
+
+                <div class="space-y-2.5">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+                        <label for="nombre" class="text-xs sm:text-sm">Nombre completo:</label>
+                        <input type="text" id="nombre" required placeholder="Ej. Carlos Mendoza" class="input-blanco sm:w-2/3 px-3 py-1 rounded-sm text-sm">
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+                        <label for="empresa" class="text-xs sm:text-sm">Empresa / Rubro:</label>
+                        <input type="text" id="empresa" placeholder="Ej. Tecnología / InnovaTech" class="input-blanco sm:w-2/3 px-3 py-1 rounded-sm text-sm">
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+                        <label for="telefono" class="text-xs sm:text-sm">Teléfono:</label>
+                        <input type="tel" id="telefono" required placeholder="Ej. +51 987 654 321" class="input-blanco sm:w-2/3 px-3 py-1 rounded-sm text-sm">
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+                        <label for="correo" class="text-xs sm:text-sm">Correo:</label>
+                        <input type="email" id="correo" placeholder="Ej. carlos@mendoza.com" class="input-blanco sm:w-2/3 px-3 py-1 rounded-sm text-sm">
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+                        <label for="etiqueta" class="text-xs sm:text-sm">Etiqueta:</label>
+                        <input type="text" id="etiqueta" placeholder="Ej. VIP, Proveedor, Importante" class="input-blanco sm:w-2/3 px-3 py-1 rounded-sm text-sm">
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+                        <label for="nota" class="text-xs sm:text-sm">Nota:</label>
+                        <input type="text" id="nota" placeholder="Añade observaciones adicionales..." class="input-blanco sm:w-2/3 px-3 py-1 rounded-sm text-sm">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sección: Detalles Comerciales -->
+            <div class="pt-2 border-t border-slate-400/30">
+                <h3 class="text-xs sm:text-sm font-semibold tracking-wider text-gray-200 uppercase mb-3">Detalles Comerciales</h3>
+
+                <div class="space-y-2.5">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+                        <label for="frecuencia" class="text-xs sm:text-sm">Frecuencia / Meses de compra:</label>
+                        <input type="text" id="frecuencia" placeholder="Ej. Mensual (12 compras)" class="input-blanco sm:w-2/3 px-3 py-1 rounded-sm text-sm">
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+                        <label for="codigoPedido" class="text-xs sm:text-sm">Código / N° de Pedido:</label>
+                        <input type="text" id="codigoPedido" placeholder="Ej. (N° 1001)" class="input-blanco sm:w-2/3 px-3 py-1 rounded-sm text-sm">
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-1">
+                        <label for="detallePedido" class="text-xs sm:text-sm sm:mt-1">Detalle del Pedido / Producto:</label>
+                        <textarea id="detallePedido" rows="2" placeholder="Ej. Compra dos monitores gamer..." class="input-blanco sm:w-2/3 px-3 py-1 rounded-sm text-sm resize-none"></textarea>
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-1">
+                        <label for="recordatorio" class="text-xs sm:text-sm sm:mt-1">Recordatorio / Seguimiento:</label>
+                        <textarea id="recordatorio" rows="2" placeholder="Ej. Validar la entrega con el proveedor..." class="input-blanco sm:w-2/3 px-3 py-1 rounded-sm text-sm resize-none"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Botones de Acción -->
+            <div class="flex justify-end gap-3 pt-4">
+                <a href="eleccion_ingreso.html" id="btnCancelar" class="bg-gray-500 hover:bg-gray-600 text-white px-6 py-1.5 rounded-sm text-sm font-medium transition-colors flex items-center justify-center">
+                    Cancelar
+                </a>
+                <button type="submit" id="btnGuardar" class="bg-slate-700 hover:bg-slate-800 border border-slate-500 text-white px-6 py-1.5 rounded-sm text-sm font-medium transition-colors">
+                    Guardar
+                </button>
+            </div>
+
+        </form>
+    </div>
+
+    <!-- Archivo JS de lógica -->
+    <script src="../assets/js/registro_manual.js"></script>
+</body>
+</html>

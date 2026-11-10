@@ -1,0 +1,129 @@
+/* Configuración General de la Página */
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #000000; /* Fondo negro como en el prototipo */
+  color: #ffffff;
+  font-family: Arial, Helvetica, sans-serif;
+  min-height: 100vh;
+}
+
+/* Header Superior (Logo + Slogan) */
+.header-login {
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+  gap: 15px;
+}
+
+.box-logo {
+  width: 65px;
+  height: 60px;
+  background-color: #d9d9d9; /* Recuadro gris para la imagen */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px; /* Bordes redondeados */
+  
+}
+
+.logo-top {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: 8px; /* Bordes redondeados */
+}
+
+.slogan-texto {
+  font-size: 1.2rem;
+  color: #ffffff;
+}
+
+/* Contenedor Central */
+.contenedor-principal-login {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 20px;
+}
+
+.titulo-sistema {
+  text-align: center;
+  font-size: 1.8rem;
+  font-weight: normal;
+  margin-bottom: 40px;
+  line-height: 1.3;
+}
+
+/* Tarjeta Gris de Login */
+.tarjeta-login {
+  background-color: #d9d9d9; /* Color gris claro de la tarjeta */
+  color: #000000;
+  width: 100%;
+  max-width: 350px;
+  padding: 25px 30px;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.subtitulo-login {
+  font-size: 1.2rem;
+  font-weight: normal;
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
+/* Formulario e Inputs */
+.form-login {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  text-align: left;
+}
+
+.campo-login label {
+  display: block;
+  font-size: 0.95rem;
+  margin-bottom: 5px;
+}
+
+.campo-login input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #000;
+  background-color: #ffffff;
+  box-sizing: border-box;
+}
+
+/* Botón de Ingresar */
+.btn-ingresar {
+  width: 100%;
+  background-color: #5b6275; /* Azul grisáceo como en la imagen */
+  color: #ffffff;
+  border: none;
+  padding: 10px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.btn-ingresar:hover {
+  background-color: #4a5061;
+}
+
+/* Enlace inferior */
+.footer-login-card {
+  margin-top: 15px;
+}
+
+.footer-login-card p {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.enlace-registro {
+  color: #000000;
+  font-size: 0.9rem;
+  text-decoration: underline;
+}
+

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asistente IA - Duckworth</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="flex h-screen overflow-hidden text-gray-800">
+
+    <!-- BARRA LATERAL (SIDEBAR NEGRO) -->
+    <aside class="w-64 bg-black text-white flex flex-col justify-between p-4 flex-shrink-0 z-10 select-none">
+        <div>
+            <!-- Header / Logo -->
+            <div class="flex items-center gap-3 px-3 py-4 mb-6 border-b border-gray-800">
+                <span class="font-semibold text-lg tracking-wide text-gray-100">Sistema Inteligente</span>
+            </div>
+
+            <!-- Menú de Navegación -->
+            <nav class="space-y-1.5">
+                <a href="perfil.html" class="nav-btn flex items-center gap-3.5 px-4 py-3 rounded-xl text-gray-400 hover:text-white hover:bg-zinc-900 transition-all font-medium text-sm">
+                    <i class='bx bx-user text-xl'></i>
+                    <span>Perfil</span>
+                </a>
+
+                <a href="pagina_contactos.html" class="nav-btn flex items-center gap-3.5 px-4 py-3 rounded-xl text-gray-400 hover:text-white hover:bg-zinc-900 transition-all font-medium text-sm">
+                    <i class='bx bx-book-content text-xl'></i>
+                    <span>Contactos</span>
+                </a>
+
+                <a href="historial.html" class="nav-btn flex items-center gap-3.5 px-4 py-3 rounded-xl text-gray-400 hover:text-white hover:bg-zinc-900 transition-all font-medium text-sm">
+                    <i class='bx bx-history text-xl'></i>
+                    <span>Historial</span>
+                </a>
+
+                <a href="asistente.html" class="nav-btn flex items-center gap-3.5 px-4 py-3 rounded-xl bg-slate-700/80 text-white font-medium text-sm transition-all shadow-sm">
+                    <i class='bx bx-bot text-xl'></i>
+                    <span>Asistente IA</span>
+                </a>
+
+                <a href="configuracion.html" class="nav-btn flex items-center gap-3.5 px-4 py-3 rounded-xl text-gray-400 hover:text-white hover:bg-zinc-900 transition-all font-medium text-sm">
+                    <i class='bx bx-cog text-xl'></i>
+                    <span>Configuración</span>
+                </a>
+            </nav>
+        </div>
+
+        <!-- Widget Usuario Conectado -->
+        <div class="bg-[#121f1d] border border-[#1b3d35] rounded-lg p-3 mt-auto shadow-md">
+            <span class="text-[10px] uppercase font-semibold tracking-wider text-[#4ade80] block mb-1">
+                Usuario Conectado
+            </span>
+            <div class="flex items-center gap-2">
+                <div class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></div>
+                <span id="user-name-display" class="text-sm font-medium text-gray-200">Prueba 0</span>
+            </div>
+        </div>
+    </aside>
+
+    <!-- ÁREA DEL CHAT DE IA -->
+    <main class="flex-1 flex flex-col min-w-0 bg-slate-50 p-6">
+        <div class="max-w-4xl mx-auto w-full flex-1 flex flex-col bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden">
+            
+            <!-- Header Chat con Botón de Cerrar -->
+            <div class="p-4 border-b border-gray-100 bg-slate-900 text-white flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <i class='bx bx-bot text-2xl text-slate-300'></i>
+                    <div>
+                        <h2 class="font-semibold text-sm">Asistente Duckworth (Llama 3.2)</h2>
+                        <span class="text-[11px] text-emerald-400 font-medium flex items-center gap-1">
+                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> En línea
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Botón Cerrar (Redirige a pagina_contactos.html) -->
+                <a href="pagina_contactos.html" title="Regresar a Contactos" class="flex items-center justify-center p-2 rounded-lg bg-slate-800 hover:bg-red-600 text-gray-300 hover:text-white transition-colors">
+                    <i class='bx bx-x text-2xl'></i>
+                </a>
+            </div>
+
+            <!-- Feed de Conversación -->
+            <div id="chatContainer" class="flex-1 p-6 overflow-y-auto space-y-4">
+                <div class="flex justify-start mb-4">
+                    <div class="max-w-[75%] p-3.5 rounded-2xl text-sm bg-gray-100 text-gray-800 shadow-sm">
+                        ¡Hola! Soy tu asistente inteligente impulsado por Llama 3.2. ¿En qué te puedo ayudar hoy con la gestión de tus contactos o tareas?
+                    </div>
+                </div>
+            </div>
+
+            <!-- Input / Envío de Mensaje -->
+            <div class="p-4 border-t border-gray-100 bg-white">
+                <div class="flex items-center gap-2">
+                    <input type="text" id="inputMensaje" placeholder="Escribe tu consulta a la IA..." 
+                           class="flex-1 border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-slate-600 transition-colors">
+                    <button id="btnEnviar" class="bg-slate-800 hover:bg-slate-900 text-white p-2.5 rounded-xl transition-colors">
+                        <i class='bx bx-send text-lg'></i>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Script JS -->
+    <script src="../assets/js/asistente.js"></script>
+</body>
+</html>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Contactos</title>
+    
+    <!-- Librerías Externas -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Hoja de Estilos Personalizada -->
+    <link rel="stylesheet" href="../assets/css/pagina_principal.css">
+</head>
+<body class="flex h-screen overflow-hidden text-gray-800">
+
+    <!-- BARRA LATERAL (SIDEBAR) -->
+    <aside class="w-64 bg-black text-white flex flex-col justify-between p-4 flex-shrink-0 z-10 select-none">
+        <div>
+            <!-- Header / Logo -->
+            <div class="flex items-center gap-3 px-3 py-4 mb-6 border-b border-gray-800">
+                <img src="/logos/logo1.png" alt="Logo" class="w-8 h-8 object-contain">
+                    <span class="font-semibold text-lg tracking-wide text-gray-100">Gestión Contactos</span>
+                </div>
+
+            </div>
+
+            <!-- Menú de Navegación -->
+            <nav class="space-y-1.5">
+                <a href="pagina_contactos.html" class="nav-btn flex items-center gap-3.5 px-4 py-3 rounded-xl text-gray-400 hover:text-white hover:bg-zinc-900 transition-all font-medium text-sm">
+                    <i class='bx bx-user text-xl'></i>
+                    <span>Perfil</span>
+                </a>
+
+                <a href="pagina_contactos.html" class="nav-btn flex items-center gap-3.5 px-4 py-3 rounded-xl bg-slate-700/80 text-white font-medium text-sm transition-all shadow-sm">
+                    <i class='bx bx-book-content text-xl'></i>
+                    <span>Contactos</span>
+                </a>
+
+                <a href="historial.html" class="nav-btn flex items-center gap-3.5 px-4 py-3 rounded-xl text-gray-400 hover:text-white hover:bg-zinc-900 transition-all font-medium text-sm">
+                    <i class='bx bx-history text-xl'></i>
+                    <span>Historial</span>
+                </a>
+
+                <a href="asistente.html" class="nav-btn flex items-center gap-3.5 px-4 py-3 rounded-xl text-gray-400 hover:text-white hover:bg-zinc-900 transition-all font-medium text-sm">
+                    <i class='bx bx-bot text-xl'></i>
+                    <span>Asistente IA</span>
+                </a>
+
+                <a href="configuracion.html" class="nav-btn flex items-center gap-3.5 px-4 py-3 rounded-xl text-gray-400 hover:text-white hover:bg-zinc-900 transition-all font-medium text-sm">
+                    <i class='bx bx-cog text-xl'></i>
+                    <span>Configuración</span>
+                </a>
+            </nav>
+        </div>
+
+        <!-- Widget Usuario Conectado -->
+        <div class="bg-[#121f1d] border border-[#1b3d35] rounded-lg p-3 mt-auto shadow-md">
+            <span class="text-[10px] uppercase font-semibold tracking-wider text-[#4ade80] block mb-1">
+                Usuario Conectado
+            </span>
+            <div class="flex items-center gap-2">
+                <div class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></div>
+                <span id="nombreUsuarioSidebar" class="text-sm font-medium text-gray-200">Cargando...</span>
+            </div>
+        </div>
+    </aside>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="flex-1 flex flex-col min-w-0 bg-white overflow-hidden relative">
+        <!-- Topbar -->
+        <header class="flex justify-between items-center px-8 py-5 border-b border-gray-100 bg-white">
+            <div>
+                <h1 class="text-2xl font-bold text-gray-900">Directorio de Contactos</h1>
+                <p class="text-xs text-gray-500 mt-0.5">Gestiona tus contactos registrados y escaneados</p>
+            </div>
+
+            <button id="btn-open-modal" class="flex items-center gap-2 bg-[#5d688d] hover:bg-[#4c5677] active:scale-95 text-white px-5 py-2.5 rounded-md font-medium text-sm shadow-md transition-all cursor-pointer">
+                <i class='bx bx-plus text-lg'></i>
+                <span>Nuevo contacto</span>
+            </button>
+        </header>
+
+        <!-- Directorio / Tabla de Contactos -->
+        <div class="flex-1 p-8 overflow-y-auto bg-slate-50/50">
+            <div class="max-w-6xl mx-auto space-y-4">
+                
+                <!-- Buscador -->
+                <div class="mb-4">
+                    <input type="text" id="inputBuscar" placeholder="Buscar por nombre, rubro o empresa.." 
+                           class="w-full max-w-md px-3 py-1.5 border-2 border-slate-600 rounded-sm text-sm focus:outline-none bg-white">
+                </div>
+
+                <!-- Tabla de Contactos -->
+                <div class="bg-white border-2 border-[#68749c] rounded-sm shadow-md overflow-x-auto">
+                    <table class="w-full text-left border-collapse text-xs md:text-sm">
+                        <thead>
+                            <tr class="bg-gray-300/80 text-gray-800 font-semibold border-b border-gray-300">
+                                <th class="p-2 md:p-3">Nombre Completo</th>
+                                <th class="p-2 md:p-3">Teléfono</th>
+                                <th class="p-2 md:p-3">Correo</th>
+                                <th class="p-2 md:p-3">Rubro/Empresa</th>
+                                <th class="p-2 md:p-3">Frecuencia de compra</th>
+                                <th class="p-2 md:p-3">Origen de registro</th>
+                                <th class="p-2 md:p-3">Codigo/Pedido</th>
+                                <th class="p-2 md:p-3 max-w-xs">Nota</th>
+                                <th class="p-2 md:p-3 max-w-xs">Recordatorio</th>
+                                <th class="p-2 md:p-3 text-center">Acciones</th>
+                            </tr>
+                        </thead>
+                        
+                        <tbody id="tablaContactosBody" class="divide-y divide-gray-200 text-gray-800">
+                            <!-- Filas cargadas dinámicamente -->
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- TOAST NOTIFICACIÓN -->
+    <div id="toast" class="fixed bottom-6 right-6 bg-gray-900 text-white px-5 py-3 rounded-lg shadow-xl text-sm transform translate-y-20 opacity-0 transition-all duration-300 z-50 flex items-center gap-2">
+        <i class='bx bx-check-circle text-emerald-400 text-lg'></i>
+        <span id="toast-text">Acción realizada</span>
+    </div>
+
+    <!-- Archivo JS de la vista -->
+    <script src="../assets/js/pagina_principal.js"></script>
+</body>
+</html>

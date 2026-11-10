@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="../assets/css/registro.css">
+    <title>Registro - Gestión Contactos IA</title>
+</head>
+<body>
+
+    <!-- Contenedor principal de la página -->
+    <div class="contenedor-registro-pagina">
+
+        <!-- Columna Izquierda: Formulario -->
+        <div class="columna-formulario">
+            <h1 class="titulo-registro">Registro</h1>
+
+            <form class="form-registro" id="formRegistro">
+                <div class="campo-registro">
+                    <label for="nombre">Nombre Completo:</label>
+                    <input type="text" id="nombre" required>
+                </div>
+
+                <div class="campo-registro">
+                    <label for="correo">Gmail:</label>
+                    <input type="email" id="correo" required>
+                </div>
+
+                <div class="campo-registro">
+                    <label for="password">Contraseña:</label>
+                    <input type="password" id="password" required>
+                </div>
+
+                <button type="submit" class="btn-registrarse">Registrarse</button>
+            </form>
+
+            <p class="enlace-login-texto">
+                ¿Ya tienes cuenta? <a href="login.html">Inicia sesión aquí</a>
+            </p>
+        </div>
+
+        <!-- Columna Derecha: Bloque Gris -->
+        <div class="columna-gris-derecha"></div>
+
+    </div>
+
+    <!-- Script de Integración con Flask y MongoDB -->
+    <script>
+        document.getElementById('formRegistro').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            // Capturar los valores introducidos por el usuario
+            const name = document.getElementById('nombre').value;
+            const email = document.getElementById('correo').value;
+            const password = document.getElementById('password').value;
+
+            try {
+                // Enviar la petición al servidor Flask
+                const response = await fetch('http://127.0.0.1:5000/api/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ name, email, password })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    // Mostrar mensaje de éxito y redirigir al login
+                    alert("¡Registro exitoso! Tu cuenta ha sido guardada en MongoDB Atlas.");
+                    window.location.href = "login.html";
+                } else {
+                    // Mostrar mensaje de error proveniente del backend
+                    alert("Error al registrar: " + (data.message || "No se pudo procesar la solicitud"));
+                }
+            } catch (error) {
+                console.error("Error en la petición:", error);
+                alert("No se pudo conectar con el servidor backend. Asegúrate de que Flask esté ejecutándose.");
+            }
+        });
+    </script>
+
+</body>
+</html>

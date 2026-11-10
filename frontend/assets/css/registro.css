@@ -1,0 +1,116 @@
+/* ==========================================
+   ESTILOS EXCLUSIVOS PARA REGISTRO
+   ========================================== */
+
+/* Layout principal dividido en dos columnas */
+.contenedor-registro-pagina {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+}
+
+/* Columna izquierda con el formulario (fondo negro) */
+.columna-formulario {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 40px 0 40px 100px; /* Alineado a la izquierda con margen interno */
+  box-sizing: border-box;
+}
+
+/* Título de Registro */
+.titulo-registro {
+  color: #ffffff;
+  font-size: 28px;
+  margin-top: 0;
+  margin-bottom: 25px;
+  font-weight: normal;
+  text-align: left;
+}
+
+/* Ancho del formulario */
+.form-registro {
+  width: 100%;
+  max-width: 380px;
+}
+
+/* Campos de entrada */
+.campo-registro {
+  margin-bottom: 20px;
+}
+
+.campo-registro label {
+  display: block;
+  color: #ffffff;
+  font-size: 15px;
+  margin-bottom: 8px;
+}
+
+.campo-registro input[type="text"],
+.campo-registro input[type="email"],
+.campo-registro input[type="password"] {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ffffff;
+  background-color: #ffffff;
+  color: #000000;
+  outline: none;
+  box-sizing: border-box;
+}
+
+/* Opciones con Radio Buttons */
+.pregunta-uso {
+  color: #ffffff;
+  font-size: 15px;
+  margin-bottom: 10px;
+}
+
+.opciones-radio {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 25px;
+}
+
+.opcion-item {
+  color: #ffffff;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.opcion-item input[type="radio"] {
+  cursor: pointer;
+}
+
+/* Botón Registrarse (Verde) */
+.btn-registrarse {
+  width: 100%;
+  background-color: #2e7d32; /* Verde del boceto */
+  color: #ffffff;
+  padding: 10px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.btn-registrarse:hover {
+  background-color: #256628;
+}
+
+/* Enlace inferior para ir al login */
+.enlace-login-texto {
+  margin-top: 20px;
+  color: #ffffff;
+  font-size: 14px;
+}
+
+.enlace-login-texto a {
+  color: #5c6378;
+  text-decoration: underline;
+}
+

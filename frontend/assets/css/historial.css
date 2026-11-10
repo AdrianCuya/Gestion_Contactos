@@ -1,0 +1,82 @@
+.historial-container {
+  padding: 30px;
+  border: 1px solid #4a526d;
+  border-radius: 8px;
+  background-color: #ffffff;
+  color: #1a1a1a;
+  min-height: 80vh;
+}
+
+.filtros-box h3 {
+  font-size: 1.1rem;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.filtros-options {
+  display: flex;
+  gap: 40px;
+  margin-bottom: 30px;
+}
+
+.btn-filtro {
+  background: none;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  color: #333;
+  padding: 5px 10px;
+  border-radius: 4px;
+}
+
+.btn-filtro.active {
+  font-weight: bold;
+  background-color: #e2e8f0;
+}
+
+.grupo-fecha {
+  margin-top: 25px;
+}
+
+.fecha-titulo {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.tarjeta-historial {
+  margin-bottom: 25px;
+}
+
+.tarjeta-historial h4 {
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 8px;
+  color: #222;
+}
+
+.item-detalle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.item-info {
+  font-size: 0.95rem;
+  color: #444;
+}
+
+.item-hora {
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.btn-ver-contacto {
+  background-color: #656d8a;
+  color: #ffffff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}

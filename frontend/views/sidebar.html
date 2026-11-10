@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contactos - Duckworth</title>
+    <link rel="stylesheet" href="../assets/css/contactos_opciones.css">
+</head>
+<body>
+
+    <div class="layout-container">
+        <!-- Sidebar Izquierdo -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <span class="titulo-seccion">Contactos</span>
+            </div>
+
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="perfil.html">Perfil</a></li>
+                    <li><a href="contactos.html" class="active">Contactos</a></li>
+                    <li><a href="historial.html">Historial</a></li>
+                    <li><a href="asistente.html">Asistente IA</a></li>
+                    <li><a href="configuracion.html">Configuración</a></li>
+                </ul>
+            </nav>
+
+            <!-- Tarjeta de Usuario Conectado en la parte inferior del Sidebar -->
+            <div class="user-card-container">
+                <div class="user-card">
+                    <span class="user-status">Usuario Conectado</span>
+                    <h3 class="user-name" id="user-name-display">Prueba 0</h3>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Área Principal de Contenido (Fondo Blanco) -->
+        <main class="main-content">
+            
+            <!-- Barra Superior / Botón -->
+            <header class="top-bar">
+                <button class="btn-nuevo-contacto">+ Nuevo contacto</button>
+            </header>
+
+            <!-- Contenedor Modal Central -->
+            <section class="modal-wrapper">
+                <div class="modal-card">
+                    <h2 class="modal-titulo">¿Cómo deseas ingresar el contacto?</h2>
+
+                    <div class="opciones-grid">
+                        <!-- Opción 1: OCR -->
+                        <div class="opcion-box">
+                            <h3>ESCANEAR CON OCR</h3>
+                            <p>Use la cámara o sube una foto de la tarjeta para autocompletar los datos.</p>
+                        </div>
+
+                        <!-- Opción 2: Ingreso Manual -->
+                        <div class="opcion-box">
+                            <h3>INGRESO MANUAL</h3>
+                            <p>Llenar los datos tradicionalmente en un formulario.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+</body>
+</html>

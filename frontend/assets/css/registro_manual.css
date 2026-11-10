@@ -1,0 +1,27 @@
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f1f5f9;
+}
+
+/* Estilo exacto a la tarjeta azul del prototipo */
+.card-formulario {
+    background-color: #68749c;
+    border: 2px solid #525d80;
+}
+
+.input-blanco {
+    background-color: #ffffff;
+    color: #1e293b;
+    border: 1px solid #cbd5e1;
+}
+
+.input-blanco:focus {
+    outline: 2px solid #3b82f6;
+}
+
+/* Modo Vista Previa / Bloqueado */
+.input-blanco[readonly] {
+    background-color: #f8fafc;
+    cursor: not-allowed;
+    border-color: transparent;
+}

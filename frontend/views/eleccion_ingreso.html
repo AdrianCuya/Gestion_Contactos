@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elección de Ingreso - Gestión Contactos</title>
+    
+    <!-- Librerías Externas -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    
+    <!-- Hoja de Estilos de esta pantalla -->
+    <link rel="stylesheet" href="../assets/css/eleccion_ingreso.css" />
+</head>
+<body class="bg-slate-100 flex items-center justify-center min-h-screen p-4">
+
+    <!-- Tarjeta Principal Azul Slate -->
+    <div class="card-eleccion w-full max-w-2xl rounded-sm p-8 md:p-10 text-white relative shadow-2xl">
+        
+        <!-- Botón de regresar / cerrar (X) -->
+        <a href="pagina_contactos.html" class="absolute top-3 right-4 text-gray-300 hover:text-white text-2xl transition-colors" title="Cancelar y volver">
+            &times;
+        </a>
+
+        <!-- Título -->
+        <h2 class="text-xl md:text-2xl font-normal text-center mb-8 text-gray-100 tracking-wide">
+            ¿Cómo deseas ingresar el contacto?
+        </h2>
+
+        <!-- Opciones (Tarjetas Blancas) -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            
+            <!-- Opción 1: Escanear con OCR -->
+            <div id="btn-ocr" class="bg-white text-gray-900 rounded-sm p-6 shadow-md hover:shadow-xl hover:-translate-y-1 transition-all cursor-pointer group flex flex-col justify-between">
+                <div>
+                    <h3 class="font-bold text-center text-sm md:text-base tracking-wider mb-4 text-gray-900 group-hover:text-blue-600 transition-colors uppercase">
+                        ESCANEAR CON OCR
+                    </h3>
+                    <p class="text-xs md:text-sm text-gray-700 leading-relaxed">
+                        Use la cámara o sube una foto de la tarjeta para autocompletar los datos.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Opción 2: Ingreso Manual -->
+            <div id="btn-manual" class="bg-white text-gray-900 rounded-sm p-6 shadow-md hover:shadow-xl hover:-translate-y-1 transition-all cursor-pointer group flex flex-col justify-between">
+                <div>
+                    <h3 class="font-bold text-center text-sm md:text-base tracking-wider mb-4 text-gray-900 group-hover:text-blue-600 transition-colors uppercase">
+                        INGRESO MANUAL
+                    </h3>
+                    <p class="text-xs md:text-sm text-gray-700 leading-relaxed">
+                        Llenar los datos tradicionalmente en un formulario.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Botón Cancelar Inferior (Corregido a pagina_contactos.html) -->
+        <div class="flex justify-center">
+            <a href="pagina_contactos.html" class="bg-slate-800/60 hover:bg-slate-900 text-gray-200 border border-slate-400/30 px-6 py-2 rounded text-sm font-medium transition-all hover:scale-105 active:scale-95">
+                Cancelar
+            </a>
+        </div>
+
+    </div>
+
+    <!-- Script de redirección -->
+    <script src="../assets/js/eleccion_ingreso.js"></script>
+</body>
+</html>

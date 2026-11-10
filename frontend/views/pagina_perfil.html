@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Contactos - Perfil</title>
+    <link rel="stylesheet" href="../assets/css/pagina_principal.css">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+</head>
+<body>
+
+    <!-- SIDEBAR / MENÚ LATERAL -->
+    <aside class="sidebar" id="sidebar">
+        <!-- Usuario Conectado en la parte superior -->
+        <div class="user-status-card">
+            <span class="status-tag">Usuario Conectado</span>
+            <div class="user-info-brief">
+                <i class="bx bxs-user-circle"></i>
+                <span class="user-name">Juan Pérez</span>
+            </div>
+        </div>
+
+        <!-- Menú de Navegación -->
+        <ul class="menu">
+            <li class="menu-item">
+                <a href="#" class="menu-link active">
+                    <i class="bx bx-user"></i>
+                    <span>Perfil</span>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="#" class="menu-link">
+                    <i class="bx bx-book-content"></i>
+                    <span>Contactos</span>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="#" class="menu-link">
+                    <i class="bx bx-history"></i>
+                    <span>Historial</span>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="#" class="menu-link">
+                    <i class="bx bx-bot"></i>
+                    <span>Asistente IA</span>
+                </a>
+            </li>
+        </ul>
+
+        <!-- Configuración al final -->
+        <div class="sidebar-footer">
+            <a href="#" class="menu-link">
+                <i class="bx bx-cog"></i>
+                <span>Configuración</span>
+            </a>
+        </div>
+    </aside>
+
+    <!-- ÁREA PRINCIPAL -->
+    <main class="main-content">
+        <!-- Botón superior derecho -->
+        <header class="top-header">
+            <button class="btn-primary" id="btn-nuevo-contacto">
+                <i class="bx bx-plus"></i>
+                <span>Nuevo contacto</span>
+            </button>
+        </header>
+
+        <!-- Tarjeta Central: Mi Cuenta -->
+        <section class="account-card">
+            <h2>Mi cuenta</h2>
+
+            <!-- Sección Información -->
+            <div class="info-section">
+                <h3>Informacion</h3>
+                <div class="profile-details-wrapper">
+                    <div class="avatar-placeholder">
+                        <i class="bx bx-user"></i>
+                        <span>Foto / Avatar</span>
+                    </div>
+                    <div class="user-details-list">
+                        <p class="detail-name">Juan Pérez</p>
+                        <p class="detail-role">Ejecutivo Comercial</p>
+                        <p class="detail-company">Empresa: TechSolutions S.A</p>
+                        <p class="detail-email">Correo: juan.perez@empresa.com</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sección Resumen de Uso -->
+            <div class="usage-section">
+                <h3>Resumen de Uso</h3>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <span class="stat-number">1</span>
+                        <span class="stat-label">Contacto guardado</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number">0</span>
+                        <span class="stat-label">Tarjetas escaneadas</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number">1</span>
+                        <span class="stat-label">Comprobante / boleta</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- MODAL DE ELECCIÓN DE INGRESO -->
+    <div class="modal-overlay" id="modal-contacto">
+        <div class="modal-container">
+            <button class="modal-close" id="modal-close">&times;</button>
+            <h2>¿Cómo deseas ingresar el contacto?</h2>
+            
+            <div class="modal-options">
+                <div class="option-card" id="option-ocr">
+                    <h3>ESCANEAR CON OCR</h3>
+                    <p>Use la camara o sube una foto de la tarjeta para la autocompletar los datos.</p>
+                </div>
+
+                <div class="option-card" id="option-manual">
+                    <h3>INGRESO MANUAL</h3>
+                    <p>LLenar los datos tradicionalmente en un formulario.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../assets/js/pagina_principal.js"></script>
+</body>
+</html>
