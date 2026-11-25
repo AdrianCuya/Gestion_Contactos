@@ -1,19 +1,25 @@
+import os
+print(">>> ESTOY CORRIENDO EL ARCHIVO EN LA RUTA:", os.path.abspath(__file__))
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from werkzeug.security import generate_password_hash, check_password_hash
 from bson.objectid import ObjectId
 from datetime import datetime
 import requests
+import pytesseract
+from PIL import Image
+import io
+
+pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
+# 1. Inicializar la app de Flask UNA SOLA VEZ
+app = Flask(__name__)
+CORS(app)
 
 # Importar la base de datos y colecciones conectadas a MongoDB Atlas
 from config import db, users_collection, contacts_collection
 
-app = Flask(__name__)
-# Habilitar CORS para permitir peticiones desde el frontend web
-CORS(app)
 
-
-# ==================== RUTA: REGISTRO DE USUARIOS ====================
+#RUTA: REGISTRO DE USUARIOS 
 @app.route('/api/register', methods=['POST'])
 def register():
     try:
@@ -45,7 +51,7 @@ def register():
         return jsonify({"message": f"Error interno: {str(e)}"}), 500
 
 
-# ==================== RUTA: INICIO DE SESIÓN (LOGIN) ====================
+#RUTA: INICIO DE SESIÓN (LOGIN)
 @app.route('/api/login', methods=['POST'])
 def login():
     try:
@@ -71,18 +77,17 @@ def login():
         return jsonify({"message": f"Error interno: {str(e)}"}), 500
 
 
-# ==================== RUTA: GESTIONAR CONTACTOS (GET / POST) ====================
+#RUTA: GESTIONAR CONTACTOS (GET / POST) 
 @app.route('/api/contacts', methods=['GET', 'POST', 'OPTIONS'])
 def handle_contacts():
     if request.method == 'OPTIONS':
         return jsonify({'status': 'ok'}), 200
 
-    # 1. OBTENER / LEER CONTACTOS (GET)
+    # OBTENER / LEER CONTACTOS (GET)
     if request.method == 'GET':
         try:
             contactos = list(contacts_collection.find())
             
-            # Convertir el ObjectId de MongoDB a String para JSON
             for c in contactos:
                 c['_id'] = str(c['_id'])
 
@@ -92,7 +97,7 @@ def handle_contacts():
             print(f"[ERROR AL LEER CONTACTOS]: {e}")
             return jsonify({"message": f"Error interno: {str(e)}"}), 500
 
-    # 2. CREAR / GUARDAR CONTACTO (POST)
+    # CREAR / GUARDAR CONTACTO (POST)
     if request.method == 'POST':
         try:
             data = request.get_json()
@@ -100,13 +105,11 @@ def handle_contacts():
             if not data.get('nombre') and not data.get('nombre_completo'):
                 return jsonify({"message": "El nombre del contacto es requerido"}), 400
 
-            # Garantizar que siempre se guarde la fecha de creación y el origen
             if 'fecha_creacion' not in data:
                 data['fecha_creacion'] = datetime.now().isoformat()
             if 'origen_registro' not in data and 'origen' not in data:
                 data['origen_registro'] = 'MANUAL'
 
-            # Guardar en la colección 'contacts' de MongoDB Atlas
             resultado = contacts_collection.insert_one(data)
             print(f"[OK] Contacto guardado en Atlas con ID: {resultado.inserted_id}")
 
@@ -117,14 +120,13 @@ def handle_contacts():
             return jsonify({"message": f"Error al guardar contacto: {str(e)}"}), 500
 
 
-# ==================== RUTA: HISTORIAL DE REGISTROS ====================
+# RUTA: HISTORIAL DE REGISTROS 
 @app.route('/api/historial', methods=['GET', 'OPTIONS'])
 def get_historial():
     if request.method == 'OPTIONS':
         return jsonify({'status': 'ok'}), 200
 
     try:
-        # Obtener todos los contactos ordenados del más reciente al más antiguo
         contactos_cursor = list(contacts_collection.find().sort("_id", -1))
 
         contactos = []
@@ -133,7 +135,6 @@ def get_historial():
         for c in contactos_cursor:
             totales["todos"] += 1
             
-            # Normalizar el origen (OCR o MANUAL)
             origen_raw = str(c.get("origen_registro") or c.get("origen") or "MANUAL").upper()
             origen = "OCR" if "OCR" in origen_raw else "MANUAL"
 
@@ -142,7 +143,6 @@ def get_historial():
             else:
                 totales["manual"] += 1
 
-            # Mapeo flexible de nombres de campos para evitar datos vacíos
             nombre = c.get("nombre_completo") or c.get("nombre") or "Contacto sin nombre"
             empresa = c.get("empresa_rubro") or c.get("empresa") or "Sin empresa / rubro"
             fecha = c.get("fecha_creacion") or datetime.now().isoformat()
@@ -165,7 +165,7 @@ def get_historial():
         return jsonify({"message": f"Error interno al obtener historial: {str(e)}"}), 500
 
 
-# ==================== RUTA: ELIMINAR CONTACTO ====================
+# RUTA: ELIMINAR CONTACTO 
 @app.route('/api/contacts/<id>', methods=['DELETE', 'OPTIONS'])
 def delete_contact(id):
     if request.method == 'OPTIONS':
@@ -183,10 +183,9 @@ def delete_contact(id):
     except Exception as e:
         print(f"[ERROR AL ELIMINAR CONTACTO]: {e}")
         return jsonify({"message": f"Error interno: {str(e)}"}), 500
-    
-import requests
 
-# ==================== RUTA: ASISTENTE IA (LLAMA 3 + OLLAMA) ====================
+
+# RUTA: ASISTENTE IA (LLAMA 3 + OLLAMA) 
 @app.route('/api/chat-ia', methods=['POST', 'OPTIONS'])
 def chat_ia():
     if request.method == 'OPTIONS':
@@ -199,7 +198,6 @@ def chat_ia():
         if not user_message:
             return jsonify({"message": "El mensaje no puede estar vacío"}), 400
 
-        # Obtener datos de MongoDB Atlas para dar contexto
         total_contactos = contacts_collection.count_documents({})
         contactos_cursor = list(contacts_collection.find().limit(10))
 
@@ -211,22 +209,20 @@ def chat_ia():
 
         lista_texto = "\n".join(resumen_contactos) if resumen_contactos else "No hay contactos registrados."
 
-        # Prompt estructurado para Llama 3
         system_prompt = f"""Eres el Asistente IA del sistema Duckworth.
 Información del sistema:
 - Total contactos registrados: {total_contactos}
 - Muestra de contactos:
 {lista_texto}
 
-REGLA ACLARATORIA: En este sistema, el campo "Nota" o "Notas" se refiere a OBSERVACIONES DE TEXTO o comentarios sobre el contacto (por ejemplo: "", "Llamar por la tarde", etc.), NO a calificaciones numéricas o notas de exámenes.
+REGLA ACLARATORIA: En este sistema, el campo "Nota" o "Notas" se refiere al campo de observaciones o comentarios, NO a calificaciones numéricas.
 
 Responde a la consulta del usuario de forma concisa y precisa.
 
 Consulta: {user_message}"""
 
-        # Enviar solicitud a la API local de Ollama (puerto 11434)
         payload = {
-            "model": "llama3.2",  # Cambiado a la versión ultra rápida
+            "model": "llama3.2",
             "prompt": system_prompt,
             "stream": False
         }
@@ -237,18 +233,53 @@ Consulta: {user_message}"""
             res_json = response.json()
             return jsonify({"reply": res_json.get("response", "Sin respuesta.")}), 200
         else:
-            return jsonify({"message": f"Ollama devolvió código {response.status_code}. Revisa si el modelo 'llama3' está descargado."}), 500
+            return jsonify({"message": f"Ollama devolvió código {response.status_code}."}), 500
 
     except requests.exceptions.ConnectionError:
-        return jsonify({"message": "No se pudo conectar a Ollama en http://localhost:11434. Asegúrate de tener Ollama corriendo."}), 500
+        return jsonify({"message": "No se pudo conectar a Ollama en http://localhost:11434."}), 500
 
     except Exception as e:
         print(f"[ERROR EN API CHAT IA]: {e}")
         return jsonify({"message": f"Error interno: {str(e)}"}), 500
 
 
+# RUTA: OCR PARA ESCANEAR TARJETAS 
+print(">>> ¡ATENCIÓN: EL ARCHIVO APP.PY CON OCR SÍ SE ESTÁ LEYENDO! <<<")
+
+
+@app.route('/api/ocr', methods=['POST', 'OPTIONS'])
+def procesar_ocr():
+    if request.method == 'OPTIONS':
+        return jsonify({'status': 'ok'}), 200
+
+    try:
+        if 'imagen' not in request.files:
+            return jsonify({"error": "No se encontró ninguna imagen en la petición"}), 400
+        
+        archivo_imagen = request.files['imagen']
+        imagen = Image.open(archivo_imagen.stream)
+        
+        # Procesar con Tesseract OCR (idioma español)
+        texto_extraido = pytesseract.image_to_string(imagen, lang='spa')
+
+        return jsonify({
+            "success": True,
+            "texto_bruto": texto_extraido
+        }), 200
+
+    except Exception as e:
+        print(f"[ERROR EN OCR]: {e}")
+        return jsonify({"error": f"Error interno en el servidor OCR: {str(e)}"}), 500
+    
+
+# Imprimir todas las rutas que Flask reconoció al arrancar
+with app.app_context():
+    print("--- RUTAS ACTIVAS EN FLASK ---")
+    for rule in app.url_map.iter_rules():
+        print(rule)
+    print("------------------------------")
+
+
+# EJECUCIÓN DEL SERVIDOR 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
-
-
-

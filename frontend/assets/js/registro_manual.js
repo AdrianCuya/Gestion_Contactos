@@ -79,7 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!estado) {
             btnGuardar.textContent = "Guardar";
             btnCancelar.textContent = "Cancelar";
-            btnCancelar.setAttribute("href", "eleccion_ingreso.html");
+            btnCancelar.setAttribute("href", "pagina_contactos.html");
             btnCancelar.onclick = null;
             modoVistaPrevia = false;
         }

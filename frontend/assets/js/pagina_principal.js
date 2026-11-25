@@ -1,4 +1,43 @@
 document.addEventListener('DOMContentLoaded', () => {
+    const btnOpenModal = document.getElementById('btn-open-modal');
+    const modalEleccion = document.getElementById('modalEleccion');
+    const btnCerrarModal = document.getElementById('btnCerrarModal');
+    const btnCancelarModal = document.getElementById('btnCancelarModal');
+
+    // Abrir modal
+    if (btnOpenModal && modalEleccion) {
+        btnOpenModal.addEventListener('click', (e) => {
+            e.preventDefault();
+            modalEleccion.classList.add('active');
+        });
+    } else {
+        console.error("No se encontró el botón #btn-open-modal o el modal #modalEleccion en el DOM.");
+    }
+
+    // Cerrar modal con 'X' o 'Cancelar'
+    [btnCerrarModal, btnCancelarModal].forEach(btn => {
+        btn?.addEventListener('click', (e) => {
+            e.preventDefault();
+            modalEleccion?.classList.remove('active');
+        });
+    });
+
+    // Redirección al seleccionar Ingreso Manual
+    document.getElementById('btn-manual')?.addEventListener('click', () => {
+        window.location.href = "registro_manual.html";
+    });
+
+    // Redirección al seleccionar OCR
+    document.getElementById('btn-ocr')?.addEventListener('click', () => {
+        window.location.href = "escanear_ocr.html";
+    });
+});
+
+// CARGAR NOMBRE DE USUARIO EN EL SIDEBAR
+// Lee los datos de la sesión actual almacenados en el navegador (localStorage)
+// y busca el elemento HTML con el ID 'nombreUsuarioSidebar' para mostrar su nombre.
+
+document.addEventListener('DOMContentLoaded', () => {
     // 1. Cargar nombre de usuario desde localStorage
     const usuarioGuardado = JSON.parse(localStorage.getItem('usuarioActivo'));
     const nombreDisplay = document.getElementById('nombreUsuarioSidebar');
@@ -6,10 +45,10 @@ document.addEventListener('DOMContentLoaded', () => {
         nombreDisplay.textContent = usuarioGuardado.name;
     }
 
-    // 2. Cargar contactos desde la API de Flask
+    // Cargar contactos desde la API de Flask
     cargarContactos();
 
-    // 3. Listener del buscador dinámico
+    // Listener del buscador dinámico
     const inputBuscar = document.getElementById('inputBuscar');
     if (inputBuscar) {
         inputBuscar.addEventListener('input', (e) => {
@@ -22,9 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // Almacén global temporal para los contactos de MongoDB
 let contactosCargados = [];
 
-/**
- * Petición GET para traer los contactos de la base de datos
- */
+
 async function cargarContactos() {
     const tbody = document.getElementById('tablaContactosBody');
     if (!tbody) return;
@@ -46,9 +83,9 @@ async function cargarContactos() {
     }
 }
 
-/**
- * Filtra y renderiza en tiempo real según lo escrito en el input
- */
+
+ // Filtra y renderiza en tiempo real según lo escrito en el input
+ 
 function filtrarTabla(termino) {
     // Si el buscador está vacío, muestra todos los contactos
     if (termino === '') {
@@ -76,16 +113,8 @@ function filtrarTabla(termino) {
     renderizarTabla(resultados, termino);
 }
 
- // 2. Redirección al Botón Nuevo Contacto
-    const btnOpenModal = document.getElementById('btn-open-modal');
-    btnOpenModal?.addEventListener('click', () => {
-        window.location.href = "eleccion_ingreso.html";
-    });
-
-
-/**
- * Pinta las filas de la tabla en el HTML
- */
+//Pinta las filas de la tabla en el HTML
+ 
 function renderizarTabla(contactos, terminoBusqueda = '') {
     const tbody = document.getElementById('tablaContactosBody');
     if (!tbody) return;
@@ -144,17 +173,16 @@ function renderizarTabla(contactos, terminoBusqueda = '') {
     });
 }
 
-/**
- * Petición DELETE a Flask para borrar un contacto
- */
+
+//Petición DELETE a Flask para borrar un contacto
+ 
 async function eliminarContacto(id) {
     if (!confirm('¿Estás seguro de que deseas eliminar este contacto?')) return;
 
     try {
         const response = await fetch(`http://localhost:5000/api/contacts/${id}`, {
-            method: 'DELETE'
-        });
-
+           method: 'DELETE'
+  });
         if (response.ok) {
             mostrarToast('Contacto eliminado correctamente');
             cargarContactos();
@@ -168,9 +196,7 @@ async function eliminarContacto(id) {
     }
 }
 
-/**
- * Notificación Toast
- */
+
 function mostrarToast(mensaje) {
     const toast = document.getElementById('toast');
     const toastText = document.getElementById('toast-text');

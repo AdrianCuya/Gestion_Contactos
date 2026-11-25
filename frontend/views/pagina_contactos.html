@@ -4,14 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestión de Contactos</title>
-    
+
     <!-- Librerías Externas -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
+
     <!-- Hoja de Estilos Personalizada -->
     <link rel="stylesheet" href="../assets/css/pagina_principal.css">
+    <link rel="stylesheet" href="../assets/css/eleccion_ingreso.css" />
 </head>
 <body class="flex h-screen overflow-hidden text-gray-800">
 
@@ -76,7 +77,7 @@
                 <p class="text-xs text-gray-500 mt-0.5">Gestiona tus contactos registrados y escaneados</p>
             </div>
 
-            <button id="btn-open-modal" class="flex items-center gap-2 bg-[#5d688d] hover:bg-[#4c5677] active:scale-95 text-white px-5 py-2.5 rounded-md font-medium text-sm shadow-md transition-all cursor-pointer">
+            <button id="btn-open-modal" type="button" class="flex items-center gap-2 bg-[#5d688d] hover:bg-[#4c5677] active:scale-95 text-white px-5 py-2.5 rounded-md font-medium text-sm shadow-md transition-all cursor-pointer">
                 <i class='bx bx-plus text-lg'></i>
                 <span>Nuevo contacto</span>
             </button>
@@ -125,8 +126,61 @@
         <i class='bx bx-check-circle text-emerald-400 text-lg'></i>
         <span id="toast-text">Acción realizada</span>
     </div>
+    <!-- Modal de Elección de Ingreso (Oculto por defecto) -->
+    <div id="modalEleccion" class="modal-overlay">
+
+    <div class="card-eleccion w-full max-w-2xl rounded-sm p-8 md:p-10 text-white relative shadow-2xl">
+
+        <!-- Botón de cerrar (X) -->
+        <button id="btnCerrarModal" type="button" class="absolute top-3 right-4 text-gray-300 hover:text-white text-2xl transition-colors cursor-pointer">
+            &times;
+        </button>
+
+        <h2 class="text-xl md:text-2xl font-normal text-center mb-8 text-gray-100 tracking-wide">
+            ¿Cómo deseas ingresar el contacto?
+        </h2>
+
+        <!-- Opciones -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+
+            <div id="btn-ocr" class="bg-white text-gray-900 rounded-sm p-6 shadow-md hover:shadow-xl hover:-translate-y-1 transition-all cursor-pointer group flex flex-col justify-between">
+                <a href="escanear_ocr.html" class="block"></a>
+                <div>
+                    <h3 class="font-bold text-center text-sm md:text-base tracking-wider mb-4 text-gray-900 group-hover:text-blue-600 transition-colors uppercase">
+                        ESCANEAR TARJETA
+                    </h3>
+                    <p class="text-xs md:text-sm text-gray-700 leading-relaxed">
+                        Use la cámara o sube una foto de la tarjeta para autocompletar los datos.
+                    </p>
+                </div>
+            </div>
+
+            <div id="btn-manual" class="bg-white text-gray-900 rounded-sm p-6 shadow-md hover:shadow-xl hover:-translate-y-1 transition-all cursor-pointer group flex flex-col justify-between">
+                <div>
+                    <h3 class="font-bold text-center text-sm md:text-base tracking-wider mb-4 text-gray-900 group-hover:text-blue-600 transition-colors uppercase">
+                        INGRESO MANUAL
+                    </h3>
+                    <p class="text-xs md:text-sm text-gray-700 leading-relaxed">
+                        Llenar los datos tradicionalmente en un formulario.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Botón Cancelar -->
+        <div class="flex justify-center">
+            <button id="btnCancelarModal" type="button" class="bg-slate-800/60 hover:bg-slate-900 text-gray-200 border border-slate-400/30 px-6 py-2 rounded text-sm font-medium transition-all cursor-pointer">
+                Cancelar
+            </button>
+        </div>
+
+
+    </div>
+</div>
 
     <!-- Archivo JS de la vista -->
     <script src="../assets/js/pagina_principal.js"></script>
+
 </body>
 </html>

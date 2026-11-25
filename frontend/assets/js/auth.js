@@ -1,8 +1,7 @@
 const API_URL = "http://127.0.0.1:5000/api";
 
-// -------------------------------------------------------------
-// 1. REGISTRO EN MONGO DB
-// -------------------------------------------------------------
+
+// REGISTRO EN MONGO DB
 const registerForm = document.getElementById("registerForm");
 
 if (registerForm) {
@@ -35,9 +34,8 @@ if (registerForm) {
     });
 }
 
-// -------------------------------------------------------------
-// 2. INICIO DE SESIÓN DESDE MONGO DB
-// -------------------------------------------------------------
+
+// INICIO DE SESIÓN DESDE MONGO DB
 const loginForm = document.getElementById("loginForm");
 
 if (loginForm) {

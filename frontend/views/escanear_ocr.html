@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Escanear Tarjeta - Gestión Contactos IA</title>
+    <link rel="stylesheet" href="registro.css">
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; background-color: #f4f4f9; padding: 20px; }
+        .container { max-width: 500px; margin: 0 auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        video { width: 100%; max-height: 300px; border-radius: 5px; background: #000; }
+        canvas { display: none; }
+        button { background: #007bff; color: white; border: none; padding: 10px 20px; font-size: 16px; border-radius: 5px; cursor: pointer; margin-top: 10px; }
+        button:hover { background: #0056b3; }
+        .form-group { margin-top: 15px; text-align: left; }
+        .form-group label { display: block; font-weight: bold; margin-bottom: 5px; }
+        .form-group input { width: 100%; padding: 8px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; }
+        #estado-proceso { margin-top: 10px; font-weight: bold; color: #333; }
+        .seccion-alternativa { margin-top: 25px; border-top: 2px dashed #ccc; padding-top: 15px; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Escanear Tarjeta de Contacto</h2>
+        
+        <!-- OPCIÓN A: Cámara en vivo -->
+        <video id="video" autoplay playsinline></video>
+        <br>
+        <button id="btn-capturar" type="button">📸 Capturar desde Cámara</button>
+        <canvas id="canvas" width="640" height="480"></canvas>
+        
+        <!-- OPCIÓN B: Subir archivo de imagen -->
+        <div class="seccion-alternativa">
+            <label style="font-weight: bold; display: block; margin-bottom: 8px;">O sube una imagen de tu tarjeta:</label>
+            <input type="file" id="imagenInput" accept="image/*">
+            <button id="btn-subir" type="button" style="background: #17a2b8;">📁 Subir y Escanear Archivo</button>
+        </div>
+
+        <p id="estado-proceso"></p>
+
+        <!-- Formulario autorrellenable con el texto escaneado -->
+        <div class="form-group">
+            <label>Nombre Completo:</label>
+            <input type="text" id="nombre" placeholder="Se detectará automáticamente">
+        </div>
+        <div class="form-group">
+            <label>Teléfono:</label>
+            <input type="text" id="telefono" placeholder="Se detectará automáticamente">
+        </div>
+        <div class="form-group">
+            <label>Correo:</label>
+            <input type="email" id="correo" placeholder="Se detectará automáticamente">
+        </div>
+        
+        <button id="btn-guardar" style="background: #28a745; width: 100%; margin-top: 20px;">Guardar Contacto en MongoDB</button>
+    </div>
+
+    <script>
+        const video = document.getElementById('video');
+        const canvas = document.getElementById('canvas');
+        const btnCapturar = document.getElementById('btn-capturar');
+        const btnSubir = document.getElementById('btn-subir');
+        const btnGuardar = document.getElementById('btn-guardar');
+        const estado = document.getElementById('estado-proceso');
+
+        // 1. Encender la cámara web al cargar
+        navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
+            .then(stream => {
+                video.srcObject = stream;
+            })
+            .catch(err => {
+                console.error("Cámara no disponible:", err);
+                estado.textContent = "⚠️ Cámara no disponible. Usa la opción de subir archivo.";
+            });
+
+        // Función auxiliar genérica para enviar la imagen al endpoint unificado /api/ocr
+        async function enviarImagenAlServidor(blobOArchivo) {
+            estado.textContent = 'Analizando imagen con Tesseract OCR...';
+            const formData = new FormData();
+            formData.append('imagen', blobOArchivo);
+
+            try {
+                const respuesta = await fetch('http://127.0.0.1:5000/api/ocr', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await respuesta.json();
+
+                if (respuesta.ok && data.success) {
+                    estado.textContent = '¡Texto extraído con éxito!';
+                    console.log("Texto bruto:", data.texto_bruto);
+
+                    // Ponemos todo el texto bruto en el campo nombre provisionalmente 
+                    // (hasta que implementes la IA para segmentarlo)
+                    document.getElementById('nombre').value = data.texto_bruto.split('\n')[0] || '';
+                } else {
+                    estado.textContent = 'Error: ' + (data.error || 'Desconocido');
+                }
+            } catch (error) {
+                estado.textContent = 'Error de conexión con Flask (puerto 5000).';
+                console.error(error);
+            }
+        }
+
+        // 2. Evento botón Capturar Cámara
+        btnCapturar.addEventListener('click', () => {
+            const context = canvas.getContext('2d');
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+            canvas.toBlob((blob) => {
+                enviarImagenAlServidor(blob);
+            }, 'image/jpeg');
+        });
+
+        // 3. Evento botón Subir Archivo
+        btnSubir.addEventListener('click', () => {
+            const archivoInput = document.getElementById('imagenInput');
+            if (archivoInput.files.length === 0) {
+                alert("Por favor selecciona una imagen primero.");
+                return;
+            }
+            enviarImagenAlServidor(archivoInput.files[0]);
+        });
+
+        // 4. Evento botón Guardar en MongoDB
+        btnGuardar.addEventListener('click', async () => {
+            const nombre = document.getElementById('nombre').value;
+            const telefono = document.getElementById('telefono').value;
+            const correo = document.getElementById('correo').value;
+
+            if (!nombre) {
+                alert("El nombre es requerido para guardar el contacto.");
+                return;
+            }
+
+            const contactoData = {
+                nombre_completo: nombre,
+                telefono: telefono,
+                correo: correo,
+                origen_registro: "OCR"
+            };
+
+            try {
+                const res = await fetch('http://127.0.0.1:5000/api/contacts', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(contactoData)
+                });
+
+                const resultado = await res.json();
+                if (res.ok) {
+                    alert("¡Contacto guardado correctamente en MongoDB Atlas!");
+                    estado.textContent = "Contacto guardado con éxito.";
+                } else {
+                    alert("Error al guardar: " + resultado.message);
+                }
+            } catch (err) {
+                console.error(err);
+                alert("No se pudo conectar con el servidor para guardar el contacto.");
+            }
+        });
+    </script>
+</body>
+</html>

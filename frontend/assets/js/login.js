@@ -14,10 +14,10 @@ document.getElementById('formLogin').addEventListener('submit', async function(e
         const data = await response.json();
 
         if (response.ok) {
-            // 1. Guardar la sesión del usuario en localStorage
+            // Guardar la sesión del usuario en localStorage
             localStorage.setItem('usuarioActivo', JSON.stringify(data.user));
 
-            // 2. Redirigir a la página principal
+            // Redirigir a la página principal
             window.location.href = "pagina_principal.html";
         } else {
             alert("Error: " + (data.message || "Credenciales incorrectas"));
